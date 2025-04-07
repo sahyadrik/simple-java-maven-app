@@ -1,4 +1,29 @@
 #!/usr/bin/env bash
+PATH_TARGET=""
+show_usage() {
+    echo "Usage: $0 [options]"
+    echo "Options:"
+    echo "-p, --path-target Set the Target file path"
+}
+display_variables() {
+    echo "Variable set:"
+    echo " - PATH_TARGET: $PATH_TARGET"
+}
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+    -p|--path-target)
+        PATH_TARGET="$2"
+        shift 2
+        ;;
+    -h|--help)
+        show_usage
+        ;;
+    *)
+        echo "Unknown option: $1"
+        show_usage
+        ;;
+    esac
+done
 
 echo 'The following Maven command installs your Maven-built Java application'
 echo 'into the local Maven repository, which will ultimately be stored in'
@@ -23,4 +48,4 @@ set +x
 echo 'The following command runs and outputs the execution of your Java'
 echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
 set -x
-java -jar target/${NAME}-${VERSION}.jar
+java -jar ${PATH_TARGET}/${NAME}-${VERSION}.jar
